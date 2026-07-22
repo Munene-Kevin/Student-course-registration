@@ -15,7 +15,27 @@ out/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
 
+# Compiled Java files
+*.class
+
+# Build directories
+target/
+build/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
