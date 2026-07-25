@@ -1,36 +1,20 @@
 public class Student {
-    private String name;
-    private int regNo;
-    private String course;
-    private int population = 0;
+    private final String fullName;
+    private final int regNo;
+    private final String course;
 
-    public Student(int regNo, String name, String course) {
-        this.regNo = regNo;
-        this.name = name;
+    public Student(String name, int admNo, String course) {
+        this.fullName = name;
+        this.regNo = admNo;
         this.course = course;
-        this.population++;
     }
 
-    public Student() {
-        this.regNo = 0;
-        this.name = "ABEL";
-        this.course = "Mechanical Engineering";
+    public int getRegNo() {
+        return regNo;
     }
 
-    protected String getName() {
-        return this.name;
-    }
-
-    protected int getRegNo() {
-        return this.regNo;
-    }
-
-    public void printData() {
-        System.out.println("Student{" +
-                "name='" + name + '\'' +
-                ", regNo=" + regNo +
-                ", course='" + course + '\'' +
-                ", population=" + population +
-                '}');
+    @Override
+    public String toString() {
+        return "Name: " + fullName + ", Reg No: " + regNo + ", Course: " + course;
     }
 }

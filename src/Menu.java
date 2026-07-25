@@ -1,58 +1,111 @@
 import java.util.Scanner;
 
 public class Menu {
-    Scanner input = new Scanner(System.in);
-    StudentLinkedList list;
-    boolean isRunning = true;
+    private final StudentData students = new StudentData();
+    private final Scanner input = new Scanner(System.in);
 
-    public Menu() {
-        while (isRunning) {
-            System.out.println("===========================================================");
-            System.out.println("\t\t\t\t\tSTUDENT\tREGISTRATION");
-            System.out.println("===========================================================");
-            System.out.println("\t\t1. Register Student");
-            System.out.println("\t\t2. Remove Student");
-            System.out.println("\t\t3. Search Student");
-            System.out.println("\t\t4. Display Students");
-            System.out.println("\t\t5. Count Students");
-            System.out.println("\t\t6. Exit"+ "\n");
-            System.out.println("\tChoose:\t");
-            int choice = input.nextInt();
+    public void mainMenu() {
+        int choice;
+
+        do {
+            printMenu();
+            choice = readInt("Enter a choice (1, 2, 3, 4, 5, 6): ");
 
             switch (choice) {
                 case 1:
-                    System.out.println("NAME:\t");
-                    String name = input.next();
-                    System.out.println("REG NO:\t");
-                    int regNo = input.nextInt();
-                    System.out.println("COURSE:\t");
-                    String course = input.next();
-                    list = new StudentLinkedList(new Student(regNo, name, course));
-                    list.addItem();
+                    registerStudent();
                     break;
                 case 2:
-                    System.out.println("Enter admission number to delete:\t");
-                    int regNumber = input.nextInt();
-                    list.removeItem(regNumber);
+                    deleteStudent();
                     break;
                 case 3:
-                    System.out.println("Enter admission number to search:\t");
-                    int adm = input.nextInt();
-                    list.searchItem(adm);
+                    searchStudent();
                     break;
                 case 4:
-                    list.displayStudents();
+                    students.display();
                     break;
                 case 5:
-                    System.out.println(list.showPopulation());
+                    System.out.println("Total student population: " + students.getPopulation());
                     break;
                 case 6:
-                    System.out.println("exiting the system...");
-                    isRunning = false;
+                    System.out.println("Exiting...");
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + choice);
+                    System.out.println("Wrong choice. Please enter a number from 1 to 6.");
             }
+        } while (choice != 6);
+    }
+
+    private void printMenu() {
+        System.out.println();
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("			COURSE REGISTRATION PROGRAM");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("	1. Register a Student");
+        System.out.println("	2. Delete a Student");
+        System.out.println("	3. Search a Student");
+        System.out.println("	4. Display all Students");
+        System.out.println("	5. Show total Student Population");
+        System.out.println("	6. EXIT");
+    }
+
+    private void registerStudent() {
+        String name = readText("Name: ");
+        int admNo = readInt("Registration number: ");
+        String course = readText("Course: ");
+
+        students.createStudent(name, admNo, course);
+        System.out.println("Student registered successfully.");
+    }
+
+    private void deleteStudent() {
+        int admNo = readInt("Enter registration number: ");
+
+        if (students.delete(admNo)) {
+            System.out.println("Student deleted successfully.");
+        } else {
+            System.out.println("Student not found.");
         }
+    }
+
+    private void searchStudent() {
+        int admNo = readInt("Enter registration number: ");
+        Student student = students.search(admNo);
+
+        if (student == null) {
+            System.out.println("Student not found.");
+        } else {
+            System.out.println(student);
+        }
+    }
+
+    private int readInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+
+            if (input.hasNextInt()) {
+                int value = input.nextInt();
+                input.nextLine();
+                return value;
+            }
+
+            System.out.println("Invalid number. Please try again.");
+            input.nextLine();
+        }
+    }
+
+    private String readText(String prompt) {
+        String value;
+
+        do {
+            System.out.print(prompt);
+            value = input.nextLine().trim();
+
+            if (value.isEmpty()) {
+                System.out.println("This field cannot be empty.");
+            }
+        } while (value.isEmpty());
+
+        return value;
     }
 }

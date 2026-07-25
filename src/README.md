@@ -6,6 +6,12 @@
     * Search for a student
     * Display all registered students
     * Count registered students
+
+-Properties of student:
+  * full name,
+  * registration number,
+  * course selected.
+
   
 PURPOSE OF THIS MINI PROJECT:
     - To gain hands-on-skill on Linked List and OOP Paradigm
